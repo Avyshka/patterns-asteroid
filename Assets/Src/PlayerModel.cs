@@ -1,9 +1,20 @@
-﻿namespace Asteroids
+﻿using Asteroids.ScriptableObjects;
+using UnityEngine;
+
+namespace Asteroids
 {
     public class PlayerModel
     {
-        public float Speed;
-        public float Acceleration;
-        public float Hp;
+        private readonly PlayerData _playerData;
+
+        public PlayerModel(PlayerData playerData)
+        {
+            _playerData = playerData;
+        }
+
+        public float RotationSpeed => _playerData.RotationSpeed;
+        public float Speed => _playerData.Speed;
+        public float Acceleration => _playerData.Acceleration;
+        public float Hp => _playerData.Hp;
     }
 }

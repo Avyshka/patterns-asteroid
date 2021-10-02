@@ -9,6 +9,7 @@ namespace Asteroids
         private readonly IRotation _rotationImplementation;
 
         public float Speed => _moveImplementation.Speed;
+        public float RotationSpeed => _rotationImplementation.RotationSpeed;
 
         public Ship(IMove moveImplementation, IRotation rotationImplementation)
         {
@@ -16,14 +17,14 @@ namespace Asteroids
             _rotationImplementation = rotationImplementation;
         }
 
-        public void Move(float horizontal, float vertical, float deltaTime)
+        public void Move(float vertical, float deltaTime)
         {
-            _moveImplementation.Move(horizontal, vertical, deltaTime);
+            _moveImplementation.Move(vertical, deltaTime);
         }
 
-        public void Rotation(Vector3 direction)
+        public void Rotate(float horizontal, float deltaTime)
         {
-            _rotationImplementation.Rotation(direction);
+            _rotationImplementation.Rotate(horizontal, deltaTime);
         }
         
         public void AddAcceleration()
