@@ -16,4 +16,4 @@ MonoBehaviour:
   rotationSpeed: 3000
   speed: 7000
   acceleration: 3000
-  hp: 3
+  hp: 30

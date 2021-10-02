@@ -1,4 +1,5 @@
-﻿using Asteroids.Interfaces;
+﻿using Asteroids.Enums;
+using Asteroids.Interfaces;
 using Asteroids.ScriptableObjects;
 using UnityEngine;
 
@@ -16,6 +17,10 @@ namespace Asteroids
                 new PlayerModel(playerData),
                 FindObjectOfType<PlayerView>()
             );
+            
+            IViewServices viewServices = new ViewServices();
+            var m = viewServices.Instantiate(Resources.Load<GameObject>(EnemyTypes.Meteor.ToString()));
+            m.GetComponent<Meteor>().DependencyInjectHealth(new Health(1.0f));
         }
 
         private void Update()

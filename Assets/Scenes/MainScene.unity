@@ -259,8 +259,8 @@ Camera:
   m_GameObject: {fileID: 324903970}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.03951584, g: 0.06343356, b: 0.0754717, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -274,7 +274,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 30
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -421,7 +421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1942431027764028012, guid: d5bfda1a975d85940837bab7dffff728, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 1942431027764028012, guid: d5bfda1a975d85940837bab7dffff728, type: 3}
       propertyPath: m_LocalRotation.w
@@ -478,11 +478,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8130208902165331388, guid: c0a9a8df7a2a5ba418e147231fb5ed60, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8130208902165331388, guid: c0a9a8df7a2a5ba418e147231fb5ed60, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8130208902165331388, guid: c0a9a8df7a2a5ba418e147231fb5ed60, type: 3}
       propertyPath: m_LocalRotation.w
@@ -535,7 +535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2562836537586238461, guid: 7c4b57f5d1bfac3488338e596a360dcf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 2562836537586238461, guid: 7c4b57f5d1bfac3488338e596a360dcf, type: 3}
       propertyPath: m_LocalRotation.w
@@ -571,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4100799438502332750, guid: 7c4b57f5d1bfac3488338e596a360dcf, type: 3}
       propertyPath: m_Constraints
-      value: 0
+      value: 98
       objectReference: {fileID: 0}
     - target: {fileID: 4795881678182226893, guid: 7c4b57f5d1bfac3488338e596a360dcf, type: 3}
       propertyPath: m_IsKinematic
