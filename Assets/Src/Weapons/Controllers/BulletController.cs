@@ -1,19 +1,19 @@
-﻿using Asteroids.Enemies.Models;
-using Asteroids.Enemies.Views;
-using Asteroids.Interfaces;
+﻿using Asteroids.Interfaces;
+using Asteroids.Weapons.Models;
+using Asteroids.Weapons.Views;
 using UnityEngine;
 
-namespace Asteroids.Enemies.Controllers
+namespace Asteroids.Weapons.Controllers
 {
-    public class EnemyController : IUpdatable
+    public class BulletController : IUpdatable
     {
-        private readonly EnemyModel _model;
-        private readonly Enemy _view;
-        
+        private readonly BulletModel _model;
+        private readonly Bullet _view;
+
         public bool IsDead => _model.IsDead;
         public GameObject View => _view.gameObject;
-
-        public EnemyController(EnemyModel model, Enemy view)
+        
+        public BulletController(BulletModel model, Bullet view)
         {
             _model = model;
             _view = view;

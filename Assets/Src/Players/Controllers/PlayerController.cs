@@ -1,19 +1,29 @@
 ﻿using Asteroids.Interfaces;
-using Asteroids.Players.Interfaces;
 using Asteroids.Players.Models;
+using Asteroids.Players.Views;
+using UnityEngine;
 
 namespace Asteroids.Players.Controllers
 {
     public class PlayerController : IUpdatable
     {
         private readonly PlayerModel _model;
-        private readonly IPlayerView _view;
+        private readonly PlayerView _view;
 
-        public PlayerController(PlayerModel model, IPlayerView view)
+        public bool IsDead => _model.IsDead;
+        public GameObject View => _view.gameObject;
+        
+        public PlayerController(PlayerModel model, PlayerView view)
         {
             _model = model;
             _view = view;
-            _view.SetModel(_model);
+            _view.Init(_model);
+            _view.PrepareToDestroy += PrepareToDestroy;
+        }
+
+        private void PrepareToDestroy()
+        {
+            _model.IsDead = true;
         }
 
         public void OnUpdate(float deltaTime)

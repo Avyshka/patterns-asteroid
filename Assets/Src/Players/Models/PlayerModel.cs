@@ -15,5 +15,6 @@ namespace Asteroids.Players.Models
         public float Speed => _playerData.Speed;
         public float Acceleration => _playerData.Acceleration;
         public float Hp => _playerData.Hp;
+        public bool IsDead { get; set; }
     }
 }

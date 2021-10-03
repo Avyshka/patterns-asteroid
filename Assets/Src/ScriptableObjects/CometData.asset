@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4218122843475084441, guid: d5bfda1a975d85940837bab7dffff728, type: 3}
   rotationSpeed: 500
-  speed: 1500
+  speed: 10000
   hp: 300
+  damage: 0
