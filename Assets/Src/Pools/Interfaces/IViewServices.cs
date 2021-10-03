@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.Pools.Interfaces
 {
     public interface IViewServices
     {

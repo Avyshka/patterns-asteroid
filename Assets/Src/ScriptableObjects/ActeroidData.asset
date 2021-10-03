@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: ActeroidData
   m_EditorClassIdentifier: 
   prefab: {fileID: 7356087953073367227, guid: c0a9a8df7a2a5ba418e147231fb5ed60, type: 3}
+  rotationSpeed: 1500
+  speed: 5000
+  hp: 50

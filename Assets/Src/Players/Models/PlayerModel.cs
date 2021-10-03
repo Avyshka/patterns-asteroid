@@ -1,7 +1,6 @@
 ﻿using Asteroids.ScriptableObjects;
-using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.Players.Models
 {
     public class PlayerModel
     {

@@ -1,7 +1,9 @@
 using Asteroids.Interfaces;
+using Asteroids.Players.Interfaces;
+using Asteroids.Players.Models;
 using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.Players.Views
 {
     public sealed class PlayerView : MonoBehaviour, IPlayerView
     {

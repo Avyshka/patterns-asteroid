@@ -153,6 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 14bc28e1c9deed749a6d7883520f7e5e, type: 2}
+  meteorData: {fileID: 11400000, guid: 08c391c3b92d7fd4f87ff73e7699003d, type: 2}
+  asteroidData: {fileID: 11400000, guid: 74bfcf25472551b4ba3f16e48637c384, type: 2}
+  cometData: {fileID: 11400000, guid: 354601b778ecff54fb0aa4cd5a430bcd, type: 2}
 --- !u!4 &69459107
 Transform:
   m_ObjectHideFlags: 0

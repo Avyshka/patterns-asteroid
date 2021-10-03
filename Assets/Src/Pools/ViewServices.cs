@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using Asteroids.Pools.Interfaces;
 using UnityEngine;
 
-namespace Asteroids
+namespace Asteroids.Pools
 {
     public sealed class ViewServices : IViewServices
     {

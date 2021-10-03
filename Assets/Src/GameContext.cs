@@ -1,5 +1,10 @@
-﻿using Asteroids.Enums;
+﻿using Asteroids.Enemies.Factories;
 using Asteroids.Interfaces;
+using Asteroids.Players.Controllers;
+using Asteroids.Players.Models;
+using Asteroids.Players.Views;
+using Asteroids.Pools;
+using Asteroids.Pools.Interfaces;
 using Asteroids.ScriptableObjects;
 using UnityEngine;
 
@@ -8,6 +13,9 @@ namespace Asteroids
     public class GameContext : MonoBehaviour
     {
         [SerializeField] private PlayerData playerData;
+        [SerializeField] private EnemyData meteorData;
+        [SerializeField] private EnemyData asteroidData;
+        [SerializeField] private EnemyData cometData;
         
         private IUpdatable _playerController;
 
@@ -19,8 +27,9 @@ namespace Asteroids
             );
             
             IViewServices viewServices = new ViewServices();
-            var m = viewServices.Instantiate(Resources.Load<GameObject>(EnemyTypes.Meteor.ToString()));
-            m.GetComponent<Meteor>().DependencyInjectHealth(new Health(1.0f));
+
+            var meteorFactory = new MeteorFactory(viewServices);
+            meteorFactory.Create(new Health(2.0f));
         }
 
         private void Update()

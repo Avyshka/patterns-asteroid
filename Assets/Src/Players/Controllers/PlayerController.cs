@@ -1,7 +1,8 @@
 ﻿using Asteroids.Interfaces;
-using UnityEngine;
+using Asteroids.Players.Interfaces;
+using Asteroids.Players.Models;
 
-namespace Asteroids
+namespace Asteroids.Players.Controllers
 {
     public class PlayerController : IUpdatable
     {

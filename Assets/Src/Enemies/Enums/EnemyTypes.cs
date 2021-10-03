@@ -1,4 +1,4 @@
-﻿namespace Asteroids.Enums
+﻿namespace Asteroids.Enemies.Enums
 {
     public enum EnemyTypes
     {
