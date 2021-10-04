@@ -13,9 +13,9 @@ namespace Asteroids
             _hp = hp;
         }
 
-        public void AddDamage()
+        public void AddDamage(float damage)
         {
-            _hp--;
+            _hp -= damage;
         }
     }
 }

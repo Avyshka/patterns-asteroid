@@ -12,7 +12,8 @@ namespace Asteroids.Enemies.Models
         }
 
         public float RotationSpeed => _enemyData.RotationSpeed;
-        public float Speed => _enemyData.Speed;
+        public float SpeedMin => _enemyData.SpeedMin;
+        public float SpeedMax => _enemyData.SpeedMax;
         public float Hp => _enemyData.Hp;
         public float Damage => _enemyData.Damage;
         public bool IsDead { get; set; }

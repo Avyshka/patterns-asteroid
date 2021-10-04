@@ -6,14 +6,15 @@ using UnityEngine;
 
 namespace Asteroids.Players.Views
 {
-    public sealed class PlayerView : MonoBehaviour
+    public sealed class PlayerView : MonoBehaviour, IDamaged
     {
         public event Action<Transform> OnShoot;
         public event Action PrepareToDestroy;
-        
+
         private Ship _ship;
         private CorrectMoveTransform _correctMove;
         private IHealth _health;
+        private Damage _damage;
         private PlayerModel _model;
         private Rigidbody _rigidbody;
 
@@ -26,6 +27,7 @@ namespace Asteroids.Players.Views
             _ship = new Ship(moveTransform, rotation);
             _correctMove = new CorrectMoveTransform(_rigidbody);
             _health = new Health(_model.Hp);
+            _damage = new Damage();
         }
 
         public void OnUpdate(float deltaTime)
@@ -34,6 +36,7 @@ namespace Asteroids.Players.Views
             {
                 return;
             }
+
             _ship.Rotate(Input.GetAxis("Horizontal"), Time.deltaTime);
             _ship.Move(Input.GetAxis("Vertical"), Time.deltaTime);
             _correctMove.CorrectMove();
@@ -54,18 +57,28 @@ namespace Asteroids.Players.Views
             }
         }
 
-        private void OnCollisionEnter(Collision other)
+        public void GetDamage(float damage)
         {
-            if (_health.IsDead || other.gameObject.GetComponent<Bullet>())
+            if (_health.IsDead)
             {
                 return;
             }
 
-            _health.AddDamage();
+            _health.AddDamage(damage);
             if (_health.IsDead)
             {
                 PrepareToDestroy?.Invoke();
             }
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.gameObject.GetComponent<Bullet>())
+            {
+                return;
+            }
+
+            other.gameObject.GetComponent<IDamaged>()?.GetDamage(_damage.Hit);
         }
     }
 }

@@ -43,5 +43,25 @@ namespace Asteroids
                 _rigidbody.MovePosition(new Vector3(position.x, _halfHeightAtDepth, position.z));
             }
         }
+
+        public Vector3 GetRandomPosition()
+        {
+            var isNegative = Random.Range(0.0f, 1.0f) > 0.5f;
+            var isVertical = Random.Range(0.0f, 1.0f) > 0.5f;
+            float posY;
+            float posZ;
+            if (isVertical)
+            {
+                posY = isNegative ? -_halfHeightAtDepth : _halfHeightAtDepth;
+                posZ = Random.Range(-_halfWidthAtDepth, _halfWidthAtDepth);
+            }
+            else
+            {
+                posY = Random.Range(-_halfHeightAtDepth, _halfHeightAtDepth);
+                posZ = isNegative ? -_halfWidthAtDepth : _halfWidthAtDepth;
+            }
+
+            return new Vector3(0.0f, posY, posZ);
+        }
     }
 }

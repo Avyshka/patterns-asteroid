@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: MeteorData
   m_EditorClassIdentifier: 
   prefab: {fileID: 669469378056573054, guid: db0ee811984530b409f446796b64e7fb, type: 3}
-  rotationSpeed: 3000
-  speed: 20000
-  hp: 10
-  damage: 0
+  rotationSpeed: 300
+  speedMin: 500
+  speedMax: 900
+  hp: 6
+  damage: 1

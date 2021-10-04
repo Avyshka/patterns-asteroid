@@ -7,12 +7,14 @@ namespace Asteroids.ScriptableObjects
     {
         [SerializeField] private GameObject prefab;
         [SerializeField] private float rotationSpeed;
-        [SerializeField] private float speed;
+        [SerializeField] private float speedMin;
+        [SerializeField] private float speedMax;
         [SerializeField] private float hp;
         [SerializeField] private float damage;
-        
+
         public float RotationSpeed => rotationSpeed;
-        public float Speed => speed;
+        public float SpeedMin => speedMin;
+        public float SpeedMax => speedMax;
         public float Hp => hp;
         public float Damage => damage;
     }

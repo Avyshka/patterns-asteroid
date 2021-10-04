@@ -48,6 +48,15 @@ namespace Asteroids
         {
             _viewServices = new ViewServices();
 
+            AddPlayer();
+
+            AddMeteors(10);
+            AddAsteroids(10);
+            AddComets(10);
+        }
+
+        private void AddPlayer()
+        {
             var playerGameObject = _viewServices.Instantiate(Resources.Load<GameObject>("Player"));
             var player = playerGameObject.GetComponent<PlayerView>();
             player.OnShoot += Shoot;
@@ -56,25 +65,42 @@ namespace Asteroids
                 new PlayerModel(playerData),
                 player
             ));
+        }
 
+        private void AddMeteors(int count)
+        {
             var meteorFactory = new MeteorFactory(_viewServices);
+            for (var i = 0; i < count; i++)
+            {
+                _updatableObjects.Add(new EnemyController(
+                    new EnemyModel(meteorData),
+                    meteorFactory.Create().GetComponent<Meteor>()
+                ));
+            }
+        }
+
+        private void AddAsteroids(int count)
+        {
             var asteroidFactory = new AsteroidFactory(_viewServices);
+            for (var i = 0; i < count; i++)
+            {
+                _updatableObjects.Add(new EnemyController(
+                    new EnemyModel(asteroidData),
+                    asteroidFactory.Create().GetComponent<Asteroid>()
+                ));
+            }
+        }
+
+        private void AddComets(int count)
+        {
             var cometFactory = new CometFactory(_viewServices);
-
-            _updatableObjects.Add(new EnemyController(
-                new EnemyModel(meteorData),
-                meteorFactory.Create().GetComponent<Meteor>()
-            ));
-
-            _updatableObjects.Add(new EnemyController(
-                new EnemyModel(asteroidData),
-                asteroidFactory.Create().GetComponent<Asteroid>()
-            ));
-
-            _updatableObjects.Add(new EnemyController(
-                new EnemyModel(cometData),
-                cometFactory.Create().GetComponent<Comet>()
-            ));
+            for (var i = 0; i < count; i++)
+            {
+                _updatableObjects.Add(new EnemyController(
+                    new EnemyModel(cometData),
+                    cometFactory.Create().GetComponent<Comet>()
+                ));
+            }
         }
 
         private void Update()
