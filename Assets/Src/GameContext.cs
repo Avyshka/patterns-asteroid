@@ -28,7 +28,21 @@ namespace Asteroids
 
         private void Shoot(Transform t)
         {
-            var bullet = ViewServices.Instance.Instantiate(Resources.Load<GameObject>("Bullet"));
+            GameObject bullet;
+            var rand = Random.Range(0.0f, 1.0f);
+
+            if (rand > 0.5f)
+            {
+                bullet = ViewServices.Instance.Instantiate(Resources.Load<GameObject>("Bullet"));
+            }
+            else
+            {
+                var builder = new GameObjectBuilder(PrimitiveType.Cube);
+                bullet = builder.Name("BulletFromBuilder")
+                    .Rigidbody(5.0f)
+                    .Bullet();
+            }
+
             var position = t.position;
             var rotation = t.rotation;
             bullet.transform.position = position;
@@ -57,11 +71,9 @@ namespace Asteroids
             var player = playerGameObject.GetComponent<PlayerView>();
             player.OnShoot += Shoot;
 
-            var playerNew = player.DeepCopy();
-
             _updatableObjects.Add(new PlayerController(
                 new PlayerModel(playerData),
-                playerNew
+                player
             ));
         }
 
