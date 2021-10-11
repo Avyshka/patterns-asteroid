@@ -2,11 +2,11 @@
 
 namespace Bridge
 {
-    public sealed class TransformMove : IMove
+    public sealed class TeleportMove : IMove
     {
         public void Move()
         {
-            Debug.Log("Transform Move");
+            Debug.Log("Teleport Move");
         }
     }
 }

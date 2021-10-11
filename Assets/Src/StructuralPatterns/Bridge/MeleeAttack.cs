@@ -2,11 +2,11 @@
 
 namespace Bridge
 {
-    public sealed class MagicalAttack : IAttack
+    public sealed class MeleeAttack : IAttack
     {
         public void Attack()
         {
-            Debug.Log("Magical Attack");
+            Debug.Log("Melee Attack");
         }
     }
 }
