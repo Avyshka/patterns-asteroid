@@ -2,8 +2,8 @@
 {
     public enum EnemyTypes
     {
-        Meteor,
-        Asteroid,
-        Comet
+        Meteor = 1,
+        Asteroid = 2,
+        Comet = 3
     }
 }

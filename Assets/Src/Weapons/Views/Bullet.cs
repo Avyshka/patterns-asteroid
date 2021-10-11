@@ -43,7 +43,10 @@ namespace Asteroids.Weapons.Views
                 return;
             }
 
-            other.gameObject.GetComponent<IDamaged>()?.GetDamage(_damage.Hit);
+            if (other.gameObject.TryGetComponent(out IDamaged damageComponent))
+            {
+                damageComponent.GetDamage(_damage.Hit);
+            }
         }
     }
 }

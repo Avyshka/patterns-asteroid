@@ -57,7 +57,10 @@ namespace Asteroids.Enemies.Views
 
         private void OnCollisionEnter(Collision other)
         {
-            other.gameObject.GetComponent<IDamaged>()?.GetDamage(_damage.Hit);
+            if (other.gameObject.TryGetComponent(out IDamaged damageComponent))
+            {
+                damageComponent.GetDamage(_damage.Hit);
+            }
         }
     }
 }
