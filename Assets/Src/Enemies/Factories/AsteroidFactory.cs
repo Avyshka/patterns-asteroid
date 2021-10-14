@@ -1,16 +1,24 @@
-﻿using Asteroids.Enemies.Enums;
+﻿using Asteroids.Enemies.Controllers;
+using Asteroids.Enemies.Enums;
 using Asteroids.Enemies.Interfaces;
+using Asteroids.Enemies.Models;
+using Asteroids.Enemies.Views;
 using Asteroids.Pools;
+using Asteroids.ScriptableObjects;
 using UnityEngine;
 
 namespace Asteroids.Enemies.Factories
 {
     public sealed class AsteroidFactory : IEnemyFactory
     {
-        public GameObject Create()
+        public EnemyController Create(EnemyTypes type)
         {
-            var enemy = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(EnemyTypes.Asteroid.ToString()));
-            return enemy;
+            var data = Resources.Load<EnemyData>("AsteroidData");
+            var enemy = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(type.ToString()));
+            return new EnemyController(
+                new EnemyModel(data),
+                enemy.GetComponent<Asteroid>()
+            );
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Asteroids.Enemies.Controllers;
+using Asteroids.Enemies.Enums;
 
 namespace Asteroids.Enemies.Interfaces
 {
     public interface IEnemyFactory
     {
-        GameObject Create();
+        EnemyController Create(EnemyTypes data);
     }
 }
