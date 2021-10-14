@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   prefab: {fileID: 8545676285661911289, guid: 7c4b57f5d1bfac3488338e596a360dcf, type: 3}
-  rotationSpeed: 3000
-  speed: 5000
-  acceleration: 2000
+  rotationSpeed: 300
+  speed: 500
+  acceleration: 200
   hp: 3

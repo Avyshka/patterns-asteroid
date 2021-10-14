@@ -38,15 +38,11 @@ namespace Asteroids.Players.Views
                 return;
             }
 
-            _ship.Rotate(Input.GetAxis("Horizontal"), Time.deltaTime);
-            _ship.Move(Input.GetAxis("Vertical"), Time.deltaTime);
-            _correctMove.CorrectMove();
-
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 _ship.AddAcceleration();
             }
-
+            
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 _ship.RemoveAcceleration();
@@ -54,8 +50,20 @@ namespace Asteroids.Players.Views
 
             if (Input.GetButtonDown("Fire1"))
             {
-                OnShoot?.Invoke(_rigidbody.transform);
+                OnShoot?.Invoke(transform);
             }
+        }
+        
+        public void OnFixedUpdate(float deltaTime)
+        {
+            if (_health.IsDead)
+            {
+                return;
+            }
+
+            _ship.Rotate(Input.GetAxis("Horizontal"), deltaTime);
+            _ship.Move(Input.GetAxis("Vertical"), deltaTime);
+            _correctMove.CorrectMove();
         }
 
         public void GetDamage(float damage)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Asteroids
 {
@@ -15,6 +16,11 @@ namespace Asteroids
         private void Update()
         {
             _gameScene.OnUpdate(Time.deltaTime);
+        }
+
+        private void FixedUpdate()
+        {
+            _gameScene.OnFixedUpdate(Time.deltaTime);
         }
     }
 }

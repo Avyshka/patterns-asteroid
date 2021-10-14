@@ -16,6 +16,7 @@ namespace Asteroids
     public class GameScene
     {
         private readonly UpdateManager _updateManager = new UpdateManager();
+        private readonly FixedUpdateManager _fixedUpdateManager = new FixedUpdateManager();
         private readonly EntityFactory _enemyFactory;
 
         public GameScene()
@@ -39,6 +40,11 @@ namespace Asteroids
             _updateManager.OnUpdate(deltaTime);
         }
 
+        public void OnFixedUpdate(float deltaTime)
+        {
+            _fixedUpdateManager.OnFixedUpdate(deltaTime);
+        }
+
         private void AddPlayer()
         {
             var playerGameObject = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(EntityTypes.Player.ToString()));
@@ -46,10 +52,12 @@ namespace Asteroids
             player.OnShoot += AddBullet;
 
             var playerData = Resources.Load<PlayerData>(EntityData.PlayerData.ToString());
-            _updateManager.AddController(new PlayerController(
+            var playerController = new PlayerController(
                 new PlayerModel(playerData),
                 player
-            ));
+            );
+            _updateManager.AddController(playerController);
+            _fixedUpdateManager.AddController(playerController);
         }
 
         private void AddEnemies(EntityTypes enemyType, int count)
@@ -62,27 +70,8 @@ namespace Asteroids
 
         private void AddBullet(Transform t)
         {
-            GameObject bullet;
-            var rand = Random.Range(0.0f, 1.0f);
-
-            if (rand > 0.5f)
-            {
-                bullet = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(EntityTypes.Bullet.ToString()));
-            }
-            else
-            {
-                var builder = new GameObjectBuilder(PrimitiveType.Cube);
-                bullet = builder.Name("BulletFromBuilder")
-                    .Rigidbody(5.0f)
-                    .Bullet();
-            }
-
-            var position = t.position;
-            var rotation = t.rotation;
-            bullet.transform.position = position;
-            bullet.transform.rotation = rotation;
-            bullet.GetComponent<Rigidbody>().position = position;
-            bullet.GetComponent<Rigidbody>().MoveRotation(rotation);
+            var bullet = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(EntityTypes.Bullet.ToString()));
+            bullet.transform.SetPositionAndRotation(t.position + t.forward, t.rotation);
 
             var bulletData = Resources.Load<BulletData>(EntityData.BulletData.ToString());
             _updateManager.AddController(new BulletController(

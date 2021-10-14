@@ -1,11 +1,12 @@
 ﻿using Asteroids.Interfaces;
 using Asteroids.Players.Models;
 using Asteroids.Players.Views;
+using Src.Entities.Interfaces;
 using UnityEngine;
 
 namespace Asteroids.Players.Controllers
 {
-    public class PlayerController : IUpdatable
+    public class PlayerController : IUpdatable, IFixedUpdatable
     {
         private readonly PlayerModel _model;
         private readonly PlayerView _view;
@@ -29,6 +30,11 @@ namespace Asteroids.Players.Controllers
         public void OnUpdate(float deltaTime)
         {
             _view.OnUpdate(deltaTime);
+        }
+        
+        public void OnFixedUpdate(float deltaTime)
+        {
+            _view.OnFixedUpdate(deltaTime);
         }
     }
 }
