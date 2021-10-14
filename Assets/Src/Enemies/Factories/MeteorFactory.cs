@@ -13,7 +13,7 @@ namespace Asteroids.Enemies.Factories
     {
         public EnemyController Create(EnemyTypes type)
         {
-            var data = Resources.Load<EnemyData>("MeteorData");
+            var data = Resources.Load<EnemyData>(EnemyDataEnum.MeteorData.ToString());
             var enemy = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(type.ToString()));
             return new EnemyController(
                 new EnemyModel(data),
