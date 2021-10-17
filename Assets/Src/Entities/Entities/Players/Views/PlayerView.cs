@@ -1,4 +1,5 @@
 using System;
+using Asteroids.Entities.Entities.Weapons.Interfaces;
 using Asteroids.Interfaces;
 using Asteroids.Players.Models;
 using Asteroids.Weapons.Views;
@@ -9,26 +10,25 @@ namespace Asteroids.Players.Views
     [Serializable]
     public sealed class PlayerView : MonoBehaviour, IDamaged
     {
-        public event Action<Transform> Shoot;
         public event Action PrepareToDestroy;
 
         private Ship _ship;
         private CorrectMoveTransform _correctMove;
         private IHealth _health;
         private Damage _damage;
-        private PlayerModel _model;
         private Rigidbody _rigidbody;
+        private IWeapon _weapon;
 
-        public void Init(PlayerModel model)
+        public void Init(PlayerModel model, IWeapon weapon)
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _model = model;
-            var moveTransform = new AccelerationMove(_rigidbody, _model.Speed, _model.Acceleration);
-            var rotation = new RotationTransform(_rigidbody, _model.RotationSpeed);
+            var moveTransform = new AccelerationMove(_rigidbody, model.Speed, model.Acceleration);
+            var rotation = new RotationTransform(_rigidbody, model.RotationSpeed);
             _ship = new Ship(moveTransform, rotation);
             _correctMove = new CorrectMoveTransform(_rigidbody);
-            _health = new Health(_model.Hp);
+            _health = new Health(model.Hp);
             _damage = new Damage();
+            _weapon = weapon;
         }
 
         public void OnUpdate(float deltaTime)
@@ -42,18 +42,18 @@ namespace Asteroids.Players.Views
             {
                 _ship.AddAcceleration();
             }
-            
+
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 _ship.RemoveAcceleration();
             }
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
-                Shoot?.Invoke(transform);
+                _weapon.Fire(transform);
             }
         }
-        
+
         public void OnFixedUpdate(float deltaTime)
         {
             if (_health.IsDead)

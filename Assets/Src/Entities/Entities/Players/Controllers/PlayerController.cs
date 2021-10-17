@@ -1,4 +1,5 @@
 ﻿using System;
+using Asteroids.Entities.Entities.Weapons.Weapons;
 using Asteroids.Interfaces;
 using Asteroids.Players.Models;
 using Asteroids.Players.Views;
@@ -11,6 +12,7 @@ namespace Asteroids.Players.Controllers
     {
         private readonly PlayerModel _model;
         private readonly PlayerView _view;
+        private readonly WeaponWithReload _weaponWithReload;
 
         public bool IsDead => _model.IsDead;
         public GameObject View => _view.gameObject;
@@ -21,9 +23,14 @@ namespace Asteroids.Players.Controllers
         {
             _model = model;
             _view = view;
-            _view.Init(_model);
+
+            var weapon = new Weapon();
+            weapon.Shoot += OnShoot;
+
+            _weaponWithReload = new WeaponWithReload(weapon, new WeaponReloader(0.05f));
+
+            _view.Init(_model, _weaponWithReload);
             _view.PrepareToDestroy += PrepareToDestroy;
-            _view.Shoot += OnShoot;
         }
 
         private void OnShoot(Transform transform)
@@ -39,6 +46,7 @@ namespace Asteroids.Players.Controllers
         public void OnUpdate(float deltaTime)
         {
             _view.OnUpdate(deltaTime);
+            _weaponWithReload.OnUpdate(deltaTime);
         }
         
         public void OnFixedUpdate(float deltaTime)
