@@ -1,7 +1,24 @@
-﻿namespace Decorator
+﻿using UnityEngine;
+
+namespace Decorator
 {
     public abstract class ModificationWeapon
     {
-        public abstract void AddModification(Weapon weapon);
+        protected GameObject Modificator;
+
+        public void ApplyModification(Weapon weapon)
+        {
+            if (Modificator == null)
+            {
+                AddModification(weapon);
+            }
+            else
+            {
+                RemoveModification(weapon);
+            }
+        }
+
+        protected abstract void AddModification(Weapon weapon);
+        protected abstract void RemoveModification(Weapon weapon);
     }
 }

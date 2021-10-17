@@ -1,21 +1,31 @@
 ﻿using UnityEngine;
 
-
 namespace Decorator
 {
-    
-    /// <summary>
-    /// Добавить прицел и удалить прицел и глушитель
-    /// </summary>
     public sealed class DecoratorTest : MonoBehaviour
     {
         [SerializeField] private Weapon _weapon;
-        
+
+        private ModificationMuffler _modificationMuffler;
+        private ModificationAim _modificationAim;
+
         private void Start()
         {
-            ModificationMuffler modificationMuffler = new ModificationMuffler();
-            
-            modificationMuffler.AddModification(_weapon);
+            _modificationMuffler = new ModificationMuffler();
+            _modificationAim = new ModificationAim();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                _modificationAim.ApplyModification(_weapon);
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                _modificationMuffler.ApplyModification(_weapon);
+            }
         }
     }
 }
