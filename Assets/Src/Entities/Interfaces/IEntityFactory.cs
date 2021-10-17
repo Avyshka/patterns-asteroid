@@ -5,6 +5,6 @@ namespace Asteroids.Entities.Interfaces
 {
     public interface IEntityFactory
     {
-        IUpdatable Create(EntityTypes data);
+        IUpdatable Create(EntityTypes type);
     }
 }

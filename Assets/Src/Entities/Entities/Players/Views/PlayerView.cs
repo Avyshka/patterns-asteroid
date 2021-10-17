@@ -9,7 +9,7 @@ namespace Asteroids.Players.Views
     [Serializable]
     public sealed class PlayerView : MonoBehaviour, IDamaged
     {
-        public event Action<Transform> OnShoot;
+        public event Action<Transform> Shoot;
         public event Action PrepareToDestroy;
 
         private Ship _ship;
@@ -50,7 +50,7 @@ namespace Asteroids.Players.Views
 
             if (Input.GetButtonDown("Fire1"))
             {
-                OnShoot?.Invoke(transform);
+                Shoot?.Invoke(transform);
             }
         }
         

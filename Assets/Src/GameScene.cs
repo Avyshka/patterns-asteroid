@@ -1,14 +1,9 @@
 using Asteroids.Enemies.Factories;
+using Asteroids.Entities.Entities.Players.Factories;
+using Asteroids.Entities.Entities.Weapons.Factories;
 using Asteroids.Entities.Enums;
 using Asteroids.Entities.Factories;
 using Asteroids.Players.Controllers;
-using Asteroids.Players.Models;
-using Asteroids.Players.Views;
-using Asteroids.Pools;
-using Asteroids.ScriptableObjects;
-using Asteroids.Weapons.Controllers;
-using Asteroids.Weapons.Models;
-using Asteroids.Weapons.Views;
 using UnityEngine;
 
 namespace Asteroids
@@ -17,14 +12,16 @@ namespace Asteroids
     {
         private readonly UpdateManager _updateManager = new UpdateManager();
         private readonly FixedUpdateManager _fixedUpdateManager = new FixedUpdateManager();
-        private readonly EntityFactory _enemyFactory;
+        private readonly EntityFactory _entityFactory;
 
         public GameScene()
         {
-            _enemyFactory = new EntityFactory();
-            _enemyFactory.AddFactory(EntityTypes.Meteor, new MeteorFactory());
-            _enemyFactory.AddFactory(EntityTypes.Asteroid, new AsteroidFactory());
-            _enemyFactory.AddFactory(EntityTypes.Comet, new CometFactory());
+            _entityFactory = new EntityFactory();
+            _entityFactory.AddFactory(EntityTypes.Meteor, new MeteorFactory());
+            _entityFactory.AddFactory(EntityTypes.Asteroid, new AsteroidFactory());
+            _entityFactory.AddFactory(EntityTypes.Comet, new CometFactory());
+            _entityFactory.AddFactory(EntityTypes.Player, new PlayerFactory());
+            _entityFactory.AddFactory(EntityTypes.Bullet, new BulletFactory());
         }
 
         public void Start()
@@ -47,37 +44,31 @@ namespace Asteroids
 
         private void AddPlayer()
         {
-            var playerGameObject = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(EntityTypes.Player.ToString()));
-            var player = playerGameObject.GetComponent<PlayerView>();
-            player.OnShoot += AddBullet;
-
-            var playerData = Resources.Load<PlayerData>(EntityData.PlayerData.ToString());
-            var playerController = new PlayerController(
-                new PlayerModel(playerData),
-                player
-            );
-            _updateManager.AddController(playerController);
-            _fixedUpdateManager.AddController(playerController);
+            var updatableController = _entityFactory.Create(EntityTypes.Player);
+            if (updatableController is PlayerController playerController)
+            {
+                playerController.AddBullet += AddBullet;
+                _updateManager.AddController(playerController);
+                _fixedUpdateManager.AddController(playerController);
+            }
         }
 
         private void AddEnemies(EntityTypes enemyType, int count)
         {
             for (var i = 0; i < count; i++)
             {
-                _updateManager.AddController(_enemyFactory.Create(enemyType));
+                _updateManager.AddController(_entityFactory.Create(enemyType));
             }
         }
 
-        private void AddBullet(Transform t)
+        private void AddBullet(Transform transform)
         {
-            var bullet = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(EntityTypes.Bullet.ToString()));
-            bullet.transform.SetPositionAndRotation(t.position + t.forward, t.rotation);
-
-            var bulletData = Resources.Load<BulletData>(EntityData.BulletData.ToString());
-            _updateManager.AddController(new BulletController(
-                new BulletModel(bulletData),
-                bullet.GetComponent<Bullet>()
-            ));
+            var bulletController = _entityFactory.Create(EntityTypes.Bullet);
+            bulletController.View.transform.SetPositionAndRotation(
+                transform.position + transform.forward,
+                transform.rotation
+            );
+            _updateManager.AddController(bulletController);
         }
     }
 }

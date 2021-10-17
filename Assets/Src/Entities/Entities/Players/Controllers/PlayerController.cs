@@ -1,4 +1,5 @@
-﻿using Asteroids.Interfaces;
+﻿using System;
+using Asteroids.Interfaces;
 using Asteroids.Players.Models;
 using Asteroids.Players.Views;
 using Src.Entities.Interfaces;
@@ -14,12 +15,20 @@ namespace Asteroids.Players.Controllers
         public bool IsDead => _model.IsDead;
         public GameObject View => _view.gameObject;
         
+        public event Action<Transform> AddBullet;
+        
         public PlayerController(PlayerModel model, PlayerView view)
         {
             _model = model;
             _view = view;
             _view.Init(_model);
             _view.PrepareToDestroy += PrepareToDestroy;
+            _view.Shoot += OnShoot;
+        }
+
+        private void OnShoot(Transform transform)
+        {
+            AddBullet?.Invoke(transform);
         }
 
         private void PrepareToDestroy()
