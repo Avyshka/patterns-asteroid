@@ -1,9 +1,11 @@
 using Asteroids.Enemies.Factories;
 using Asteroids.Entities.Entities.Players.Factories;
+using Asteroids.Entities.Entities.Players.Upgraders;
 using Asteroids.Entities.Entities.Weapons.Factories;
 using Asteroids.Entities.Enums;
 using Asteroids.Entities.Factories;
 using Asteroids.Players.Controllers;
+using Asteroids.Players.Views;
 using UnityEngine;
 
 namespace Asteroids
@@ -13,6 +15,8 @@ namespace Asteroids
         private readonly UpdateManager _updateManager = new UpdateManager();
         private readonly FixedUpdateManager _fixedUpdateManager = new FixedUpdateManager();
         private readonly EntityFactory _entityFactory;
+
+        private Upgrader _upgrader;
 
         public GameScene()
         {
@@ -26,7 +30,8 @@ namespace Asteroids
 
         public void Start()
         {
-            AddPlayer();
+            var player = AddPlayer();
+            AddPlayerUpgrader(player);
             AddEnemies(EntityTypes.Meteor, 10);
             AddEnemies(EntityTypes.Asteroid, 5);
             AddEnemies(EntityTypes.Comet, 3);
@@ -42,7 +47,7 @@ namespace Asteroids
             _fixedUpdateManager.OnFixedUpdate(deltaTime);
         }
 
-        private void AddPlayer()
+        private PlayerView AddPlayer()
         {
             var updatableController = _entityFactory.Create(EntityTypes.Player);
             if (updatableController is PlayerController playerController)
@@ -50,7 +55,22 @@ namespace Asteroids
                 playerController.AddBullet += AddBullet;
                 _updateManager.AddController(playerController);
                 _fixedUpdateManager.AddController(playerController);
+                return playerController.View.GetComponent<PlayerView>();
             }
+
+            return null;
+        }
+
+        private void AddPlayerUpgrader(PlayerView player)
+        {
+            if (player == null)
+            {
+                return;
+            }
+
+            _upgrader = new Upgrader(player);
+            _upgrader.Add(new DamageUpgrader(player, 5));
+            _upgrader.Add(new HealthUpgrader(player, 3));
         }
 
         private void AddEnemies(EntityTypes enemyType, int count)
