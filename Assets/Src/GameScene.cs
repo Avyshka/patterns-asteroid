@@ -6,6 +6,7 @@ using Asteroids.Entities.Enums;
 using Asteroids.Entities.Factories;
 using Asteroids.Players.Controllers;
 using Asteroids.Players.Views;
+using Asteroids.UI;
 using UnityEngine;
 
 namespace Asteroids
@@ -15,11 +16,14 @@ namespace Asteroids
         private readonly UpdateManager _updateManager = new UpdateManager();
         private readonly FixedUpdateManager _fixedUpdateManager = new FixedUpdateManager();
         private readonly EntityFactory _entityFactory;
+        private readonly UserInterface _ui;
 
         private Upgrader _upgrader;
 
-        public GameScene()
+        public GameScene(UserInterface ui)
         {
+            _ui = ui;
+            
             _entityFactory = new EntityFactory();
             _entityFactory.AddFactory(EntityTypes.Meteor, new MeteorFactory());
             _entityFactory.AddFactory(EntityTypes.Asteroid, new AsteroidFactory());
@@ -40,6 +44,7 @@ namespace Asteroids
         public void OnUpdate(float deltaTime)
         {
             _updateManager.OnUpdate(deltaTime);
+            _ui.OnUpdate(deltaTime);
         }
 
         public void OnFixedUpdate(float deltaTime)

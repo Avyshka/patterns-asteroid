@@ -1,4 +1,5 @@
 ﻿using System;
+using Asteroids.UI;
 using UnityEngine;
 
 namespace Asteroids
@@ -9,7 +10,10 @@ namespace Asteroids
 
         private void Start()
         {
-            _gameScene = new GameScene();
+            var canvas = FindObjectOfType<Canvas>();
+            var ui = new UserInterface(canvas);
+            
+            _gameScene = new GameScene(ui);
             _gameScene.Start();
         }
 
