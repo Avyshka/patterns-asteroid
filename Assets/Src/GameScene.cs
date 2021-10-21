@@ -1,3 +1,4 @@
+using Asteroids.Enemies.Controllers;
 using Asteroids.Enemies.Factories;
 using Asteroids.Entities.Entities.Players.Factories;
 using Asteroids.Entities.Entities.Players.Upgraders;
@@ -23,7 +24,7 @@ namespace Asteroids
         public GameScene(UserInterface ui)
         {
             _ui = ui;
-            
+
             _entityFactory = new EntityFactory();
             _entityFactory.AddFactory(EntityTypes.Meteor, new MeteorFactory());
             _entityFactory.AddFactory(EntityTypes.Asteroid, new AsteroidFactory());
@@ -82,7 +83,11 @@ namespace Asteroids
         {
             for (var i = 0; i < count; i++)
             {
-                _updateManager.AddController(_entityFactory.Create(enemyType));
+                if (_entityFactory.Create(enemyType) is EnemyController enemyController)
+                {
+                    enemyController.AddScores += _ui.UpdateScores;
+                    _updateManager.AddController(enemyController);
+                }
             }
         }
 

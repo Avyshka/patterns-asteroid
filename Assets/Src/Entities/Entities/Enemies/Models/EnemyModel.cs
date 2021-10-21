@@ -16,6 +16,7 @@ namespace Asteroids.Enemies.Models
         public float SpeedMax => _enemyData.SpeedMax;
         public float Hp => _enemyData.Hp;
         public float Damage => _enemyData.Damage;
+        public float Score => _enemyData.Score;
         public bool IsDead { get; set; }
     }
 }

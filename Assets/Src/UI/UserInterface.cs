@@ -1,4 +1,5 @@
 ﻿using Asteroids.UI.Commands;
+using Asteroids.UI.Screens;
 using UnityEngine;
 
 namespace Asteroids.UI
@@ -7,8 +8,10 @@ namespace Asteroids.UI
     {
         private readonly Commands.Command _pauseCommand;
 
-        private GameObject _gameScreen;
+        private GameScreen _gameScreen;
         private GameObject _pauseScreen;
+
+        private float _scores = 0;
 
         public UserInterface(Component canvas)
         {
@@ -21,7 +24,7 @@ namespace Asteroids.UI
 
         private void CreateScreens(Component canvas)
         {
-            _gameScreen = Object.Instantiate(
+            var gameScreenPrefab = GameObject.Instantiate(
                 Resources.Load<GameObject>("GameScreen"),
                 canvas.transform
             );
@@ -29,13 +32,21 @@ namespace Asteroids.UI
                 Resources.Load<GameObject>("PauseScreen"),
                 canvas.transform
             );
+
+            _gameScreen = gameScreenPrefab.GetComponent<GameScreen>();
+        }
+
+        public void UpdateScores(float score)
+        {
+            _scores += score;
+            _gameScreen.UpdateScore(_scores);
         }
 
         public void OnUpdate(float deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-               _pauseCommand.Execute();
+                _pauseCommand.Execute();
             }
         }
     }

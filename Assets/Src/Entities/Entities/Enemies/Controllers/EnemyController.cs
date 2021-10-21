@@ -1,4 +1,5 @@
-﻿using Asteroids.Enemies.Models;
+﻿using System;
+using Asteroids.Enemies.Models;
 using Asteroids.Enemies.Views;
 using Asteroids.Interfaces;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Asteroids.Enemies.Controllers
     {
         private readonly EnemyModel _model;
         private readonly Enemy _view;
+        
+        public event Action<float> AddScores;
         
         public bool IsDead => _model.IsDead;
         public GameObject View => _view.gameObject;
@@ -24,6 +27,7 @@ namespace Asteroids.Enemies.Controllers
         private void PrepareToDestroy()
         {
             _model.IsDead = true;
+            AddScores?.Invoke(_model.Score);
         }
 
         public void OnUpdate(float deltaTime)

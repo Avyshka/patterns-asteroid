@@ -18,3 +18,4 @@ MonoBehaviour:
   speedMax: 600
   hp: 17
   damage: 5
+  score: 275000
