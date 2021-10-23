@@ -1,5 +1,6 @@
 ﻿using System;
 using Asteroids.Enemies.Models;
+using Asteroids.Entities.Entities.Enemies.Interfaces;
 using Asteroids.Interfaces;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -29,6 +30,10 @@ namespace Asteroids.Enemies.Views
             _rigidbody.transform.Rotate(Vector3.right * Random.Range(0.0f, 360.0f));
             _rigidbody.AddForce(_rigidbody.transform.forward * Random.Range(model.SpeedMin, model.SpeedMax) *
                                 _rigidbody.mass);
+        }
+        public void Activate(ISpawn value)
+        {
+            value.Visit(this);
         }
 
         public void OnUpdate(float deltaTime)

@@ -1,6 +1,7 @@
 ﻿using System;
 using Asteroids.Enemies.Models;
 using Asteroids.Enemies.Views;
+using Asteroids.Entities.Entities.Enemies;
 using Asteroids.Entities.Enums;
 using Asteroids.Interfaces;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace Asteroids.Enemies.Controllers
             _view = view;
             _view.Init(_model);
             _view.PrepareToDestroy += PrepareToDestroy;
+            _view.Activate(new ConsoleSpawner());
         }
 
         private void PrepareToDestroy()
