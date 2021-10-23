@@ -11,7 +11,7 @@ namespace Asteroids.UI
         private GameScreen _gameScreen;
         private GameObject _pauseScreen;
 
-        private float _scores = 0;
+        private float _scores;
 
         public UserInterface(Component canvas)
         {
@@ -40,6 +40,11 @@ namespace Asteroids.UI
         {
             _scores += score;
             _gameScreen.UpdateScore(_scores);
+        }
+
+        public void UpdateDestroyedEnemy(float comets, float asteroids, float meteors)
+        {
+            _gameScreen.UpdateDestroyedEnemy(comets, asteroids, meteors);
         }
 
         public void OnUpdate(float deltaTime)

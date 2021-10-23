@@ -1,4 +1,5 @@
-﻿using Asteroids.ScriptableObjects;
+﻿using Asteroids.Entities.Enums;
+using Asteroids.ScriptableObjects;
 
 namespace Asteroids.Enemies.Models
 {
@@ -6,10 +7,13 @@ namespace Asteroids.Enemies.Models
     {
         private readonly EnemyData _enemyData;
 
-        public EnemyModel(EnemyData enemyData)
+        public EnemyModel(EnemyData enemyData, EntityTypes type)
         {
             _enemyData = enemyData;
+            Type = type;
         }
+
+        public EntityTypes Type { get; }
 
         public float RotationSpeed => _enemyData.RotationSpeed;
         public float SpeedMin => _enemyData.SpeedMin;

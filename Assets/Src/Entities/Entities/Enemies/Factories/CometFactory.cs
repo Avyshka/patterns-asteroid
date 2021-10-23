@@ -17,7 +17,7 @@ namespace Asteroids.Enemies.Factories
             var data = Resources.Load<EnemyData>(EntityData.CometData.ToString());
             var enemy = ViewServices.Instance.Instantiate(Resources.Load<GameObject>(type.ToString()));
             return new EnemyController(
-                new EnemyModel(data),
+                new EnemyModel(data, type),
                 enemy.GetComponent<Comet>()
             );
         }
