@@ -7,10 +7,10 @@ namespace Asteroids
         private readonly float _acceleration;
 
         public AccelerationMove(
-            Transform transform,
+            Rigidbody rigidbody,
             float speed,
             float acceleration
-        ) : base(transform, speed)
+        ) : base(rigidbody, speed)
         {
             _acceleration = acceleration;
         }

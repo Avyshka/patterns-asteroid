@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-
-namespace Asteroids.Interfaces
+﻿namespace Asteroids.Interfaces
 {
     public interface IRotation
     {
-        void Rotation(Vector3 direction);
+        float RotationSpeed { get; }
+        void Rotate(float horizontal, float deltaTime);
     }
 }

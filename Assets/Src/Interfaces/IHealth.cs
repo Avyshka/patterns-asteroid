@@ -4,6 +4,6 @@
     {
         bool IsDead { get; }
         
-        void AddDamage();
+        void AddDamage(float damage);
     }
 }
