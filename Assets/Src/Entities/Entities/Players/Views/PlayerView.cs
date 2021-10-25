@@ -13,10 +13,10 @@ namespace Asteroids.Players.Views
 
         private Ship _ship;
         private CorrectMoveTransform _correctMove;
-        private IHealth _health;
-        private Damage _damage;
         private Rigidbody _rigidbody;
         private IWeapon _weapon;
+        public Damage Damage { get; private set; }
+        public IHealth Health { get; private set; }
 
         public void Init(PlayerModel model, IWeapon weapon)
         {
@@ -25,14 +25,14 @@ namespace Asteroids.Players.Views
             var rotation = new RotationTransform(_rigidbody, model.RotationSpeed);
             _ship = new Ship(moveTransform, rotation);
             _correctMove = new CorrectMoveTransform(_rigidbody);
-            _health = new Health(model.Hp);
-            _damage = new Damage();
+            Health = new Health(model.Hp);
+            Damage = new Damage();
             _weapon = weapon;
         }
 
         public void OnUpdate(float deltaTime)
         {
-            if (_health.IsDead)
+            if (Health.IsDead)
             {
                 return;
             }
@@ -55,7 +55,7 @@ namespace Asteroids.Players.Views
 
         public void OnFixedUpdate(float deltaTime)
         {
-            if (_health.IsDead)
+            if (Health.IsDead)
             {
                 return;
             }
@@ -67,13 +67,13 @@ namespace Asteroids.Players.Views
 
         public void GetDamage(float damage)
         {
-            if (_health.IsDead)
+            if (Health.IsDead)
             {
                 return;
             }
 
-            _health.AddDamage(damage);
-            if (_health.IsDead)
+            Health.AddDamage(damage);
+            if (Health.IsDead)
             {
                 PrepareToDestroy?.Invoke();
             }
@@ -88,7 +88,7 @@ namespace Asteroids.Players.Views
 
             if (other.gameObject.TryGetComponent(out IDamaged damageComponent))
             {
-                damageComponent.GetDamage(_damage.Hit);
+                damageComponent.GetDamage(Damage.Hit);
             }
         }
     }

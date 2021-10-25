@@ -13,6 +13,11 @@ namespace Asteroids
             _hp = hp;
         }
 
+        public void UpgradeHealth(float health)
+        {
+            _hp += health;
+        }
+        
         public void AddDamage(float damage)
         {
             _hp -= damage;
