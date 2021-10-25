@@ -11,11 +11,13 @@ namespace Asteroids.ScriptableObjects
         [SerializeField] private float speedMax;
         [SerializeField] private float hp;
         [SerializeField] private float damage;
+        [SerializeField] private float score;
 
         public float RotationSpeed => rotationSpeed;
         public float SpeedMin => speedMin;
         public float SpeedMax => speedMax;
         public float Hp => hp;
         public float Damage => damage;
+        public float Score => score;
     }
 }

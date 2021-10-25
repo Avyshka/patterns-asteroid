@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c641f52ae6a4335aedc95af02933e84, type: 3}
+  m_Name: MeteorData
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 669469378056573054, guid: db0ee811984530b409f446796b64e7fb, type: 3}
+  rotationSpeed: 300
+  speedMin: 500
+  speedMax: 900
+  hp: 6
+  damage: 1
+  score: 75000

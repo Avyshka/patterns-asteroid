@@ -1,0 +1,12 @@
+{
+  "units": [
+    {
+      "type": "warrior",
+      "health": 150.0
+    },
+    {
+      "type": "mag",
+      "health": 30.0
+    }
+  ]
+}
