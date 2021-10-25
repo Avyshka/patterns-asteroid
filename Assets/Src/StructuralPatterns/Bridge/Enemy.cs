@@ -1,25 +1,21 @@
-﻿using UnityEngine;
-
-
-namespace Bridge
+﻿namespace Bridge
 {
-    public sealed class Enemy : MonoBehaviour
+    public sealed class Enemy
     {
-        private IAttake _attake;
-        private IMove _move;
-        
-        private void Start()
+        private readonly IAttack _attack;
+        private readonly IMove _move;
+
+        public Enemy(IAttack attack, IMove move)
         {
-            _attake = new MagicalAttack();
-            _move = new TransformMove();
+            _attack = attack;
+            _move = move;
         }
 
-
-        public void Atake()
+        public void Attack()
         {
-            _attake.Attake();
+            _attack.Attack();
         }
-        
+
         public void Move()
         {
             _move.Move();

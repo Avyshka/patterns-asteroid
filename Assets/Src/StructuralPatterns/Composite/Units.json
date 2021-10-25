@@ -1,0 +1,16 @@
+{
+  "units": [
+    {
+      "type": "mag",
+      "health": 100.0
+    },
+    {
+      "type": "infantry",
+      "health": 150.0
+    },
+    {
+      "type": "mag",
+      "health": 50.0
+    }
+  ]
+}
