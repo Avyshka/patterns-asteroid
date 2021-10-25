@@ -8,7 +8,6 @@ using Asteroids.Players.Controllers;
 using Asteroids.Players.Models;
 using Asteroids.Players.Views;
 using Asteroids.Pools;
-using Asteroids.Pools.Interfaces;
 using Asteroids.ScriptableObjects;
 using Asteroids.Weapons.Controllers;
 using Asteroids.Weapons.Models;
@@ -25,12 +24,25 @@ namespace Asteroids
         [SerializeField] private EnemyData cometData;
         [SerializeField] private BulletData bulletData;
 
-        private IViewServices _viewServices;
-        private List<IUpdatable> _updatableObjects = new List<IUpdatable>();
+        private readonly List<IUpdatable> _updatableObjects = new List<IUpdatable>();
 
         private void Shoot(Transform t)
         {
-            var bullet = _viewServices.Instantiate(Resources.Load<GameObject>("Bullet"));
+            GameObject bullet;
+            var rand = Random.Range(0.0f, 1.0f);
+
+            if (rand > 0.5f)
+            {
+                bullet = ViewServices.Instance.Instantiate(Resources.Load<GameObject>("Bullet"));
+            }
+            else
+            {
+                var builder = new GameObjectBuilder(PrimitiveType.Cube);
+                bullet = builder.Name("BulletFromBuilder")
+                    .Rigidbody(5.0f)
+                    .Bullet();
+            }
+
             var position = t.position;
             var rotation = t.rotation;
             bullet.transform.position = position;
@@ -46,8 +58,6 @@ namespace Asteroids
 
         private void Start()
         {
-            _viewServices = new ViewServices();
-
             AddPlayer();
 
             AddMeteors(10);
@@ -57,7 +67,7 @@ namespace Asteroids
 
         private void AddPlayer()
         {
-            var playerGameObject = _viewServices.Instantiate(Resources.Load<GameObject>("Player"));
+            var playerGameObject = ViewServices.Instance.Instantiate(Resources.Load<GameObject>("Player"));
             var player = playerGameObject.GetComponent<PlayerView>();
             player.OnShoot += Shoot;
 
@@ -69,7 +79,7 @@ namespace Asteroids
 
         private void AddMeteors(int count)
         {
-            var meteorFactory = new MeteorFactory(_viewServices);
+            var meteorFactory = new MeteorFactory();
             for (var i = 0; i < count; i++)
             {
                 _updatableObjects.Add(new EnemyController(
@@ -81,7 +91,7 @@ namespace Asteroids
 
         private void AddAsteroids(int count)
         {
-            var asteroidFactory = new AsteroidFactory(_viewServices);
+            var asteroidFactory = new AsteroidFactory();
             for (var i = 0; i < count; i++)
             {
                 _updatableObjects.Add(new EnemyController(
@@ -93,7 +103,7 @@ namespace Asteroids
 
         private void AddComets(int count)
         {
-            var cometFactory = new CometFactory(_viewServices);
+            var cometFactory = new CometFactory();
             for (var i = 0; i < count; i++)
             {
                 _updatableObjects.Add(new EnemyController(
@@ -111,7 +121,7 @@ namespace Asteroids
                 if (c.IsDead)
                 {
                     _updatableObjects.Remove(c);
-                    _viewServices.Destroy(c.View);
+                    ViewServices.Instance.Destroy(c.View);
                 }
                 else
                 {

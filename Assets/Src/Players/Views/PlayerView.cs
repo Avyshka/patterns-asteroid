@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Asteroids.Players.Views
 {
+    [Serializable]
     public sealed class PlayerView : MonoBehaviour, IDamaged
     {
         public event Action<Transform> OnShoot;
