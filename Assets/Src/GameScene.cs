@@ -1,5 +1,6 @@
 using Asteroids.Enemies.Controllers;
 using Asteroids.Enemies.Factories;
+using Asteroids.Entities.Entities.Enemies.Observers;
 using Asteroids.Entities.Entities.Players.Factories;
 using Asteroids.Entities.Entities.Players.Upgraders;
 using Asteroids.Entities.Entities.Weapons.Factories;
@@ -14,8 +15,9 @@ namespace Asteroids
 {
     public class GameScene
     {
-        private readonly UpdateManager _updateManager = new UpdateManager();
-        private readonly FixedUpdateManager _fixedUpdateManager = new FixedUpdateManager();
+        private readonly UpdateManager _updateManager;
+        private readonly FixedUpdateManager _fixedUpdateManager;
+        private readonly ObserverDestroyedEnemies _observerDestroyedEnemies;
         private readonly EntityFactory _entityFactory;
         private readonly UserInterface _ui;
 
@@ -24,6 +26,12 @@ namespace Asteroids
         public GameScene(UserInterface ui)
         {
             _ui = ui;
+
+            _observerDestroyedEnemies = new ObserverDestroyedEnemies();
+            _observerDestroyedEnemies.AddDestroyedEnemy += _ui.UpdateDestroyedEnemy;
+            
+            _updateManager = new UpdateManager(_observerDestroyedEnemies);
+            _fixedUpdateManager = new FixedUpdateManager();
 
             _entityFactory = new EntityFactory();
             _entityFactory.AddFactory(EntityTypes.Meteor, new MeteorFactory());
@@ -86,6 +94,7 @@ namespace Asteroids
                 if (_entityFactory.Create(enemyType) is EnemyController enemyController)
                 {
                     enemyController.AddScores += _ui.UpdateScores;
+                    _observerDestroyedEnemies.Add(enemyController);
                     _updateManager.AddController(enemyController);
                 }
             }

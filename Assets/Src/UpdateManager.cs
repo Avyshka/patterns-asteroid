@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Asteroids.Enemies.Controllers;
+using Asteroids.Entities.Entities.Enemies.Observers;
 using Asteroids.Interfaces;
 using Asteroids.Pools;
 
@@ -7,7 +9,13 @@ namespace Asteroids
     public class UpdateManager
     {
         private readonly List<IUpdatable> _updatableObjects = new List<IUpdatable>();
+        private readonly ObserverDestroyedEnemies _observerDestroyedEnemies;
 
+        public UpdateManager(ObserverDestroyedEnemies observerDestroyedEnemies)
+        {
+            _observerDestroyedEnemies = observerDestroyedEnemies;
+        }
+        
         public void AddController(IUpdatable controller)
         {
             _updatableObjects.Add(controller);
@@ -27,6 +35,10 @@ namespace Asteroids
                 {
                     RemoveController(c);
                     ViewServices.Instance.Destroy(c.View);
+                    if (c is EnemyController enemyController)
+                    {
+                        _observerDestroyedEnemies.Remove(enemyController);
+                    }
                 }
                 else
                 {

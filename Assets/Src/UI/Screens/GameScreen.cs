@@ -1,12 +1,13 @@
-﻿using TMPro;
+﻿using Asteroids.UI.ScreenComponents;
 using UnityEngine;
 
 namespace Asteroids.UI.Screens
 {
     public sealed class GameScreen : MonoBehaviour
     {
-        private TextMeshProUGUI _scoreText;
-        
+        [SerializeField] private ScoreComponent _score;
+        [SerializeField] private DestroyedEnemiesComponent _destroyedEnemies;
+
         private readonly string[] _formats =
         {
             "{0:0.0}",
@@ -24,20 +25,20 @@ namespace Asteroids.UI.Screens
             "{0:#,0,,,,,,,,,,,,.0 U}"
         };
 
-        private void Awake()
-        {
-            _scoreText = FindObjectOfType<TextMeshProUGUI>();
-        }
-
         public void UpdateScore(float score)
         {
-            _scoreText.text = $"Score: {ToSmall(score)}";
+            _score.UpdateText($"Score: {ToSmall(score)}");
         }
-        
+
+        public void UpdateDestroyedEnemy(float comets, float asteroids, float meteors)
+        {
+            _destroyedEnemies.UpdateText($"/ Comets: {comets} / Asteroids: {asteroids} / Meteors: {meteors} /");
+        }
+
         private string ToSmall(float number)
         {
             var stringNumber = $"{number:F20}";
-            char[] separators = { ',', '.'};
+            char[] separators = {',', '.'};
             var numberParts = stringNumber.Split(separators);
             var numberSize = (numberParts[0].Length - 1) / 3;
             var format = _formats[numberSize] ?? _formats[_formats.Length - 1];
